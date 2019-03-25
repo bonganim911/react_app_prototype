@@ -9,15 +9,8 @@ const defaultProps = {};
 
 class DefaultFooter extends Component {
   render() {
-
-    // eslint-disable-next-line
-    const { children, ...attributes } = this.props;
-
     return (
-      <React.Fragment>
-        <span><a>CoreUI</a> &copy; 2019 Mck Prototype Creativity.</span>
-        <span className="ml-auto">Powered by <a> Prototype Creativity</a></span>
-      </React.Fragment>
+      <div></div>
     );
   }
 }
