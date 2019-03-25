@@ -13,8 +13,6 @@ import {
   Form
 } from 'reactstrap';
 
-import my_image from '../../../assets/img/company_application_form.jpeg';
-
 
 class Forms extends Component {
   constructor(props) {
@@ -61,7 +59,6 @@ class Forms extends Component {
     console.log('state customer', this.state.customerInformation);
     let previewData = JSON.parse(window.sessionStorage.getItem('previewData'));
     console.log('preview', previewData);
-    console.log('image', my_image);
     // let data = JSON.parse(window.sessionStorage.getItem('previewData'));
     // if(data){
     //   this.setPreviewData(data);
@@ -73,7 +70,7 @@ class Forms extends Component {
           <Col xs="10" sm="6">
             <Card>
               <CardBody>
-                <img style={{float: 'right'}} src={my_image}/>
+                <img style={{float: 'right'}} src='' alt='no image supplied'/>
               </CardBody>
             </Card>
           </Col>
