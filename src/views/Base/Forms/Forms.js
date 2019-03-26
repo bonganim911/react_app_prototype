@@ -58,6 +58,8 @@ class Forms extends Component {
     console.log('previewData', JSON.parse(window.sessionStorage.getItem('previewData')));
     console.log('state customer', this.state.customerInformation);
     let previewData = JSON.parse(window.sessionStorage.getItem('previewData'));
+    let filePath =  window.sessionStorage.getItem('file_name');
+    console.log('this is the file path',filePath);
     console.log('preview', previewData);
     // let data = JSON.parse(window.sessionStorage.getItem('previewData'));
     // if(data){
@@ -70,7 +72,7 @@ class Forms extends Component {
           <Col xs="10" sm="6">
             <Card>
               <CardBody>
-                <img style={{float: 'right'}} src='' alt='no image supplied'/>
+                <img style={{float: 'right'}} src={filePath} alt='no image supplied'/>
               </CardBody>
             </Card>
           </Col>
