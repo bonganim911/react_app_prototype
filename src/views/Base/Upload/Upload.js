@@ -21,7 +21,6 @@ class Upload extends Component {
     this.uploadFiles = this.uploadFiles.bind(this);
     this.sendRequest = this.sendRequest.bind(this);
     this.renderActions = this.renderActions.bind(this);
-    this.sessionStorageHelper = this.sessionStorageHelper.bind(this);
     this.renderPreviewState = this.renderPreviewState.bind(this);
     this.fileUpload = this.fileUpload.bind(this);
   }
@@ -32,9 +31,6 @@ class Upload extends Component {
     }));
   }
 
-  sessionStorageHelper(fileName) {
-    return window.sessionStorage.setItem('file_name', JSON.stringify(fileName));
-  }
 
   renderPreviewState() {
     this.setState({
@@ -47,6 +43,7 @@ class Upload extends Component {
   renderActions() {
     if (this.state.preview) {
       window.sessionStorage.setItem('previewData', JSON.stringify(this.state.ocrData.data));
+      window.sessionStorage.setItem('file_name', this.state.ocrData.file);
       return <Redirect push to="/base/form"/>;
     }
     if (this.state.successfullUploaded) {
@@ -92,7 +89,7 @@ class Upload extends Component {
   }
 
   fileUpload(file) {
-    const url = 'http://localhost:3000/';
+    const url = 'http://3.17.205.44:4000/upload';
     const formData = new FormData();
     formData.append('file', file);
     const config = {
@@ -115,7 +112,6 @@ class Upload extends Component {
     this.setState({uploadProgress: {}, uploading: true});
     const promises = [];
     this.state.files.forEach(file => {
-      this.sessionStorageHelper(file.name);
       promises.push(this.sendRequest(file));
     });
     try {
