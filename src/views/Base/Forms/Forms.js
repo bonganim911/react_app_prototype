@@ -58,8 +58,8 @@ class Forms extends Component {
     console.log('previewData', JSON.parse(window.sessionStorage.getItem('previewData')));
     console.log('state customer', this.state.customerInformation);
     let previewData = JSON.parse(window.sessionStorage.getItem('previewData'));
-    let filePath =  window.sessionStorage.getItem('file_name');
-    console.log('this is the file path',filePath);
+    let filePath = window.sessionStorage.getItem('file_name');
+    console.log('this is the file path', filePath);
     console.log('preview', previewData);
     // let data = JSON.parse(window.sessionStorage.getItem('previewData'));
     // if(data){
@@ -72,7 +72,7 @@ class Forms extends Component {
           <Col xs="10" sm="6">
             <Card>
               <CardBody>
-                <img style={{float: 'right'}} src={filePath} alt='no image supplied'/>
+                <img style={{float: 'right'}} src={filePath} alt="no image supplied"/>
               </CardBody>
             </Card>
           </Col>
@@ -283,6 +283,8 @@ class Forms extends Component {
                     <span><strong>VAT (Value Added Tax) Registration details:</strong></span><br/>
                   </Row>
                   <br/>
+
+
                   <FormGroup row className="my-0">
                     <Col xs="6">
                       <FormGroup>
@@ -315,44 +317,66 @@ class Forms extends Component {
                       </FormGroup>
                     </Col>
                   </FormGroup>
-                  <Card>
-                    <Row>
-                      <Col xs="6">
-                        <Card>
-                          <CardBody>
-                            <Col xs="12">
-                              <FormGroup>
-                                <Label htmlFor="postal-code">Tax country</Label>
-                                  <Input type="text" id="postal-code" placeholder={previewData.VAT_Registration.country}/>
-                              </FormGroup>
-                            </Col>
-                          </CardBody>
-                        </Card>
-                      </Col>
-                      <Col xs="6">
-                        <Card>
-                          <CardBody>
-                            dslnfjdsnf
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    </Row>
 
+                  <br/>
+                  <Row>
+                    <span><strong>Details of Proprietors/Partners/Directors/POA Holders:</strong></span><br/>
+                  </Row>
+                  <br/>
+
+                  <Card style={{paddingTop: '20px', paddingLeft: '10px', paddingRight: '10px'}}>
                     <Row>
-                      <Col xs="6">
-                        <Card>
-                          <CardBody>
-                            dslnfjdsnf
-                          </CardBody>
-                        </Card>
-                      </Col>
-                      <Col xs="6">
-                        <Card>
-                          <CardBody>
-                            dslnfjdsnf
-                          </CardBody>
-                        </Card>
-                      </Col>
+                      {previewData.partners_details.map((partner, index) =>
+                          <Col xs="6">
+                            <Card>
+                              <CardBody>
+                                <Row xs="3">
+                                  <div className="progress-group-prepend">
+                                    <span className="progress-group-text">Name:</span>
+                                  </div>
+                                  <div className="progress-group-bars">
+                                    <Input type="text" id="postal-code" placeholder={partner.name}/>
+                                  </div>
+                                  <div className="progress-group-prepend">
+                                    <span className="progress-group-text">Mobile Number:</span>
+                                  </div>
+                                  <div className="progress-group-bars">
+                                    <Input type="text" id="postal-code" placeholder={partner.mobile}/>
+                                  </div>
+                                  <div className="progress-group-prepend">
+                                    <span className="progress-group-text">Phone</span>
+                                  </div>
+                                  <div className="progress-group-bars">
+                                    <Input type="text" id="postal-code" placeholder={partner.phone}/>
+                                  </div>
+                                </Row>
+                                <Row xs="3">
+                                  <div className="progress-group-prepend">
+                                    <span className="progress-group-text">Email Address</span>
+                                  </div>
+                                  <div className="progress-group-bars">
+                                    <Input type="text" id="postal-code" placeholder={partner.email}/>
+                                  </div>
+                                  <div className="progress-group-prepend">
+                                    <span className="progress-group-text">Mail Address:</span>
+                                  </div>
+                                  <div className="progress-group-bars">
+                                    <Input type="text" id="postal-code" placeholder={partner.mailing_address}/>
+                                  </div>
+                                  <div className="progress-group-prepend">
+                                    <span className="progress-group-text">Place of Birth</span>
+                                  </div>
+                                  <div className="progress-group-bars">
+                                    <Input type="text" id="postal-code" placeholder={partner.place_of_birth}/>
+                                  </div>
+                                </Row>
+
+                              </CardBody>
+                            </Card>
+                          </Col>
+
+
+                      )}
                     </Row>
                   </Card>
                 </Form>
