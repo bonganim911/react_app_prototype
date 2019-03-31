@@ -43,7 +43,7 @@ class Upload extends Component {
   renderActions() {
     if (this.state.preview) {
       window.sessionStorage.setItem('previewData', JSON.stringify(this.state.ocrData.data));
-      window.sessionStorage.setItem('file_name', this.state.ocrData.file);
+      // window.sessionStorage.setItem('file_name', this.state.ocrData.file);
       return <Redirect push to="/base/form"/>;
     }
     if (this.state.successfullUploaded) {
@@ -102,7 +102,7 @@ class Upload extends Component {
 
   sendRequest(file) {
     this.fileUpload(file).then((response) => {
-      console.log('Received the payload',response.data);
+      window.sessionStorage.setItem('file_name', URL.createObjectURL(file));
       this.setState({ocrData: response.data});
       this.setState({successfullUploaded: true, uploading: false});
     });
