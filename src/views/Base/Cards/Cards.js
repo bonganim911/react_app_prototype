@@ -1,37 +1,28 @@
 import React, {Component} from 'react';
 import {Card, CardBody, Alert, Col, Row, Fade, Badge} from 'reactstrap';
 import Modals from '../Modals/Modals';
+import CompanyInformation from '../ListGroups/ListGroups';
 
 
 class Cards extends Component {
   constructor(props) {
     super(props);
-
-    this.handleNavClick = this.handleNavClick.bind(this);
     this.toggle = this.toggle.bind(this);
     this.toggleFade = this.toggleFade.bind(this);
     this.state = {
       collapse: true,
       fadeIn: true,
-      timeout: 300
+      timeout: 300,
+      goToCompanyInfomation: false
     };
+    this.handleRenderDetailInformation = this.handleRenderDetailInformation.bind(this);
   }
-  handleNavClick(){
-    let currentPath = window.location.pathname;
-    // window.location.href =  '#/base/list-groups';
-   }
 
-  run() {
-    this.el.animate([
-      { transform: 'scale(1)' },
-      { transform: 'scale(1.3)' },
-      { transform: 'scale(1)' }
-    ], {
-      duration: 400,
-      iterations: 3
-    })
-    //this.handleNavClick();
-  }
+  handleRenderDetailInformation(){
+     this.setState({
+       goToCompanyInfomation: true
+     })
+   }
 
   toggle() {
     this.setState({collapse: !this.state.collapse});
@@ -44,6 +35,10 @@ class Cards extends Component {
   }
 
   render() {
+
+    if(this.state.goToCompanyInfomation){
+      return <CompanyInformation customerData={this.props.companyData}/>;
+    }
     return (
       <div>
         <Modals />
@@ -53,81 +48,38 @@ class Cards extends Component {
               <h5 className="text-left" style={{color:"#405ba0"}}>Awaiting customer approval <small>(3 requests)</small></h5><br/><br/>
             </div>
             <Row style={{marginRight:"10px", marginLeft:"0px"}}>
-              <Fade timeout={this.state.timeout} in={this.state.fadeIn}>
-                <Card style={{width:"440px", border:"0", boxShadow:"4px 2px 33px 3px rgba(224,224,224,1)"}}>
-                    <CardBody>
-                      <div className="card-header-actions">
-                        <Badge className="float-right" style={{backgroundColor:"orange", color:"white"}}>3 reminders sent</Badge>
-                      </div>
-                      <div style={{paddingBottom: "5px", paddingTop: "9px"}}>
-                        <span><i className="fa fa-home font-2xl st-4" style={{color:"rgb(64, 91, 160)"}}></i></span>
-                        <span style={{marginLeft: "10px"}}>Phoenix Trading Company LLC</span>
-                      </div>
-                      <div>
-                        <span><i className="fa fa-user icons font-2xl st-4" style={{color:"rgb(64, 91, 160)"}}></i></span>
-                        <span style={{marginLeft: "10px"}}>Joe Clauke, James Bond</span>
-                      </div>
-                      <hr style={{paddingLeft:"2px"}}></hr>
-                      <div>
-                        <Alert style={{backgroundColor:"#fff5e5", border:"0"}}>
-                          <span><i className="fa fa-exclamation-circle fa-xlg mt-1" style={{ color:"orange"}}></i></span>
-                          <span style={{marginLeft: "10px", color:"orange"}}><strong>Awaiting statement for source of wealth</strong></span>
-                          <span className="float-left" style={{paddingTop:"18px", fontSize:"smaller", color:"black", marginLeft: "-18px"}}><i>Send 1 days ago</i></span>
-                        </Alert>
-                      </div>
-                    </CardBody>
-                </Card>
-              </Fade>
-            </Row>
-            <Row style={{marginRight:"0px", marginLeft:"0px"}}>
-              <Card style={{width:"440px", border:"0", boxShadow:"4px 2px 33px 3px rgba(224,224,224,1)"}}>
-                <CardBody>
-                  <div className="card-header-actions">
-                    <Badge className="float-right" style={{backgroundColor:"orange", color:"white"}}>5 reminders sent</Badge>
-                  </div>
-                  <div style={{paddingBottom: "5px", paddingTop: "9px"}}>
-                    <span><i className="fa fa-home font-2xl st-4" style={{color:"rgb(64, 91, 160)"}}></i></span>
-                    <span style={{marginLeft: "10px"}}>Al Abbas Trading Co</span>
-                  </div>
-                  <div>
-                    <span><i className="fa fa-user icons font-2xl st-4" style={{color:"rgb(64, 91, 160)"}}></i></span>
-                    <span style={{marginLeft: "10px"}}>Anthony Mark, Sandra Betty</span>
-                  </div>
-                  <hr style={{paddingLeft:"2px"}}></hr>
-                  <div>
-                    <Alert style={{backgroundColor:"#fff5e5", border:"0"}}>
-                      <span><i className="fa fa-exclamation-circle fa-xlg mt-1" style={{ color:"orange"}}></i></span>
-                      <span style={{marginLeft: "10px", color:"orange"}}><strong>Awaiting statement for source of wealth</strong></span>
-                      <span className="float-left" style={{paddingTop:"18px", fontSize:"smaller", color:"black", marginLeft: "-18px"}}><i>sent 34 days ago</i></span>
-                    </Alert>
-                  </div>
-                </CardBody>
-              </Card>
-            </Row>
-            <Row style={{marginRight:"0px", marginLeft:"0px"}}>
-              <Card style={{width:"440px", border:"0", boxShadow:"4px 2px 33px 3px rgba(224,224,224,1)"}}>
-                <CardBody>
-                  <div className="card-header-actions">
-                    <Badge className="float-right" style={{backgroundColor:"orange", color:"white"}}>15 reminders sent</Badge>
-                  </div>
-                  <div style={{paddingBottom: "5px", paddingTop: "9px"}}>
-                    <span><i className="fa fa-home font-2xl st-4" style={{color:"rgb(64, 91, 160)"}}></i></span>
-                    <span style={{marginLeft: "10px"}}>Ali Trading Co</span>
-                  </div>
-                  <div>
-                    <span><i className="fa fa-user icons font-2xl st-4" style={{color:"rgb(64, 91, 160)"}}></i></span>
-                    <span style={{marginLeft: "10px"}}>John Mark, Betty James</span>
-                  </div>
-                  <hr style={{paddingLeft:"2px"}}></hr>
-                  <div>
-                    <Alert style={{backgroundColor:"#fff5e5", border:"0"}}>
-                      <span><i className="fa fa-exclamation-circle fa-xlg mt-1" style={{ color:"orange"}}></i></span>
-                      <span style={{marginLeft: "10px", color:"orange"}}><strong>Awaiting statement for source of wealth</strong></span>
-                      <span className="float-left" style={{paddingTop:"18px", fontSize:"smaller", color:"black", marginLeft: "-18px"}}><i>sent 4 days ago</i></span>
-                    </Alert>
-                  </div>
-                </CardBody>
-              </Card>
+              { this.props.companyData ?
+                <div>
+                  <Fade timeout={this.state.timeout} in={this.state.fadeIn}>
+                    <Card onClick={this.handleRenderDetailInformation} style={{width:"440px", border:"0", boxShadow:"4px 2px 33px 3px rgba(224,224,224,1)"}}>
+                      <CardBody>
+                        <div className="card-header-actions">
+                          <Badge className="float-right" style={{backgroundColor:"orange", color:"white"}}>3 reminders sent</Badge>
+                        </div>
+                        <div style={{paddingBottom: "5px", paddingTop: "9px"}}>
+                          <span><i className="fa fa-home font-2xl st-4" style={{color:"rgb(64, 91, 160)"}}></i></span>
+                          <span style={{marginLeft: "10px"}}>{this.props.companyData.customer_information.name}</span>
+                        </div>
+                        <div>
+                          <span><i className="fa fa-user icons font-2xl st-4" style={{color:"rgb(64, 91, 160)"}}></i></span>
+                          <span style={{marginLeft: "10px"}}>Joe Clauke, James Bond</span>
+                        </div>
+                        <hr style={{paddingLeft:"2px"}}></hr>
+                        <div>
+                          <Alert style={{backgroundColor:"#fff5e5", border:"0"}}>
+                            <span><i className="fa fa-exclamation-circle fa-xlg mt-1" style={{ color:"orange"}}></i></span>
+                            <span style={{marginLeft: "10px", color:"orange"}}><strong>Awaiting statement for source of wealth</strong></span>
+                            <span className="float-left" style={{paddingTop:"18px", fontSize:"smaller", color:"black", marginLeft: "-18px"}}><i>Send 1 days ago</i></span>
+                          </Alert>
+                        </div>
+                      </CardBody>
+                    </Card>
+                  </Fade>
+                </div>
+                :
+                null
+              }
+
             </Row>
           </Col>
           <div style={{borderRight: "1px solid #c6c9cb", height: "1490px"}}></div>
@@ -156,7 +108,7 @@ class Cards extends Component {
                 </CardBody>
               </Card>
             </Row>
-            <div onClick={this.handleNavClick()}>
+            <div>
               <Row style={{marginRight:"0px", marginLeft:"0px"}}>
                 <Card style={{width:"440px", border:"0", boxShadow:"4px 2px 33px 3px rgba(224,224,224,1)"}}>
                   <CardBody>

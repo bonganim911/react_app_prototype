@@ -10,8 +10,8 @@ import {
   Row,
   CardFooter,
   Button,
-  Form
-} from 'reactstrap';
+  Form} from 'reactstrap';
+import Details from '../ListGroups/ListGroups';
 
 
 class Forms extends Component {
@@ -24,12 +24,20 @@ class Forms extends Component {
       collapse: true,
       fadeIn: true,
       timeout: 300,
+      previewData: {},
       customerInformation: {},
       businessAddress: {},
       registeredAddress: {},
       vatRegistration: {},
-      partnersDetails: {}
+      partnersDetails: {},
+      goToDetailSection: false,
+      filePath:""
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(){
+    this.setState({goToDetailSection: true});
   }
 
   toggle() {
@@ -42,29 +50,20 @@ class Forms extends Component {
     });
   }
 
-  setPreviewData(data) {
+  componentDidMount() {
     this.setState({
-      customerInformation: data.customer_information,
-      businessAddress: data.business_address,
-      registeredAddress: data.registred_address,
-      vatRegistration: data.VAT_Registration,
-      partnersDetails: data.partners_details,
+      previewData: JSON.parse(window.sessionStorage.getItem('previewData')),
+      filePath: window.sessionStorage.getItem('file_name')
     });
   }
 
 
   render() {
-    console.log('file_name', window.sessionStorage.getItem('file_name'));
-    console.log('previewData', JSON.parse(window.sessionStorage.getItem('previewData')));
-    console.log('state customer', this.state.customerInformation);
     let previewData = JSON.parse(window.sessionStorage.getItem('previewData'));
     let filePath = window.sessionStorage.getItem('file_name');
-    console.log('this is the file path', filePath);
-    console.log('preview', previewData);
-    // let data = JSON.parse(window.sessionStorage.getItem('previewData'));
-    // if(data){
-    //   this.setPreviewData(data);
-    // }
+    if(this.state.goToDetailSection){
+      return (<Details customerData={this.state.previewData}/>)
+    }
 
     return (
       <div className="animated fadeIn">
@@ -72,14 +71,14 @@ class Forms extends Component {
           <Col xs="10" sm="6">
             <Card>
               <CardBody>
-                <img style={{float: 'right'}} src={filePath} alt="no image supplied"/>
+                <img style={{float: 'right'}} src={this.state.filePath} alt="no image supplied"/>
               </CardBody>
             </Card>
           </Col>
           <Col xs="14" sm="6">
             <Card>
               <CardBody>
-                <Form action="" method="post" className="form-horizontal">
+                <Form onSubmit={this.handleSubmit} className="form-horizontal">
                   <Row>
                     <span><strong>Company Information</strong></span>
                     <hr style={{color: 'blue'}}></hr>
@@ -118,7 +117,7 @@ class Forms extends Component {
 
                   <br/>
                   <Row>
-                    <span><strong>Business Address:</strong> (for all official communication)</span><br/>
+                    <span><strong>business_address:</strong> (for all official communication)</span><br/>
                   </Row>
                   <br/>
 
@@ -382,7 +381,7 @@ class Forms extends Component {
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button type="submit" className="btn-lg btn-pill"
+                <Button onClick={this.handleSubmit} className="btn-lg btn-pill"
                         style={{backgroundColor: 'rgb(64, 91, 160)', color: 'white'}}><i
                   className="fa fa-dot-circle-o"></i> Submit</Button>
               </CardFooter>
