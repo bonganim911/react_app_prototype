@@ -57,11 +57,22 @@ class Forms extends Component {
     });
   }
 
+  addToCompanies(){
+    var companies = JSON.parse(window.localStorage.getItem('companies'));
+
+    if(!companies){
+      companies = [];
+    }
+    companies.push(this.state.previewData);
+    window.localStorage.setItem('companies', JSON.stringify(companies));
+  }
+
 
   render() {
     let previewData = JSON.parse(window.sessionStorage.getItem('previewData'));
     let filePath = window.sessionStorage.getItem('file_name');
     if(this.state.goToDetailSection){
+      this.addToCompanies();
       return (<Details customerData={this.state.previewData}/>)
     }
 
@@ -381,9 +392,9 @@ class Forms extends Component {
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button onClick={this.handleSubmit} className="btn-lg btn-pill"
-                        style={{backgroundColor: 'rgb(64, 91, 160)', color: 'white'}}><i
-                  className="fa fa-dot-circle-o"></i> Submit</Button>
+                <Button color="warning" onClick={this.handleSubmit} className="mr-4 btn-pill">
+                  Submit
+                </Button>
               </CardFooter>
             </Card>
           </Col>

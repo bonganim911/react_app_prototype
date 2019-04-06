@@ -13,15 +13,24 @@ class Cards extends Component {
       collapse: true,
       fadeIn: true,
       timeout: 300,
-      goToCompanyInfomation: false
+      goToCompanyInformation: false,
+      selectedCompany:{},
+      companies: []
     };
     this.handleRenderDetailInformation = this.handleRenderDetailInformation.bind(this);
   }
 
-  handleRenderDetailInformation(){
+  componentWillMount() {
+    let companies = JSON.parse(window.localStorage.getItem('companies'));
+    this.setState({companies: companies});
+  }
+
+  handleRenderDetailInformation(company){
      this.setState({
-       goToCompanyInfomation: true
+       selectedCompany: company,
+       goToCompanyInformation: true
      })
+
    }
 
   toggle() {
@@ -35,53 +44,64 @@ class Cards extends Component {
   }
 
   render() {
+    if(this.state.goToCompanyInformation){
+      return <CompanyInformation customerData={this.state.selectedCompany}/>;
+    }
 
-    if(this.state.goToCompanyInfomation){
-      return <CompanyInformation customerData={this.props.companyData}/>;
+    let partnerNames;
+    if (this.state.companies){
+      //partnerNames
     }
     return (
       <div>
         <Modals />
         <Row style={{marginRight:"0px", marginLeft:"0px"}}>
           <Col md="4">
+            { this.state.companies ?
             <div>
-              <h5 className="text-left" style={{color:"#405ba0"}}>Awaiting customer approval <small>(3 requests)</small></h5><br/><br/>
+              <h5 className="text-left" style={{color:"#405ba0"}}>Awaiting customer approval <small>({this.state.companies.length} requests)</small></h5><br/><br/>
             </div>
+              :
+              null
+            }
             <Row style={{marginRight:"10px", marginLeft:"0px"}}>
-              { this.props.companyData ?
-                <div>
-                  <Fade timeout={this.state.timeout} in={this.state.fadeIn}>
-                    <Card onClick={this.handleRenderDetailInformation} style={{width:"440px", border:"0", boxShadow:"4px 2px 33px 3px rgba(224,224,224,1)"}}>
-                      <CardBody>
-                        <div className="card-header-actions">
-                          <Badge className="float-right" style={{backgroundColor:"orange", color:"white"}}>3 reminders sent</Badge>
-                        </div>
-                        <div style={{paddingBottom: "5px", paddingTop: "9px"}}>
-                          <span><i className="fa fa-home font-2xl st-4" style={{color:"rgb(64, 91, 160)"}}></i></span>
-                          <span style={{marginLeft: "10px"}}>{this.props.companyData.customer_information.name}</span>
-                        </div>
-                        <div>
-                          <span><i className="fa fa-user icons font-2xl st-4" style={{color:"rgb(64, 91, 160)"}}></i></span>
-                          <span style={{marginLeft: "10px"}}>Joe Clauke, James Bond</span>
-                        </div>
-                        <hr style={{paddingLeft:"2px"}}></hr>
-                        <div>
-                          <Alert style={{backgroundColor:"#fff5e5", border:"0"}}>
-                            <span><i className="fa fa-exclamation-circle fa-xlg mt-1" style={{ color:"orange"}}></i></span>
-                            <span style={{marginLeft: "10px", color:"orange"}}><strong>Awaiting statement for source of wealth</strong></span>
-                            <span className="float-left" style={{paddingTop:"18px", fontSize:"smaller", color:"black", marginLeft: "-18px"}}><i>Send 1 days ago</i></span>
-                          </Alert>
-                        </div>
-                      </CardBody>
-                    </Card>
-                  </Fade>
-                </div>
+              { this.state.companies ?
+                this.state.companies.map((company, company_key) => {
+                  return (<div key={company_key}>
+                    <Fade timeout={this.state.timeout} in={this.state.fadeIn}>
+                      <Card onClick={() => this.handleRenderDetailInformation(company)} style={{width:"440px", border:"0", boxShadow:"4px 2px 33px 3px rgba(224,224,224,1)"}}>
+                        <CardBody>
+                          <div className="card-header-actions">
+                            <Badge className="float-right" style={{backgroundColor:"orange", color:"white"}}>3 reminders sent</Badge>
+                          </div>
+                          <div style={{paddingBottom: "5px", paddingTop: "9px"}}>
+                            <span><i className="fa fa-home font-2xl st-4" style={{color:"rgb(64, 91, 160)"}}></i></span>
+                            <span style={{marginLeft: "10px"}}>{company.customer_information.name}</span>
+                          </div>
+                          <div>
+                            <span><i className="fa fa-user icons font-2xl st-4" style={{color:"rgb(64, 91, 160)"}}></i></span>
+                            <span style={{marginLeft: "10px"}}>{company.partners_details.map((partner) => {return partner.name + ", "})}</span>
+                          </div>
+                          <hr style={{paddingLeft:"2px"}}></hr>
+                          <div>
+                            <Alert style={{backgroundColor:"#fff5e5", border:"0"}}>
+                              <span><i className="fa fa-exclamation-circle fa-xlg mt-1" style={{ color:"orange"}}></i></span>
+                              <span style={{marginLeft: "10px", color:"orange"}}><strong>Awaiting statement for source of wealth</strong></span>
+                              <span className="float-left" style={{paddingTop:"18px", fontSize:"smaller", color:"black", marginLeft: "-18px"}}><i>Send 1 days ago</i></span>
+                            </Alert>
+                          </div>
+                        </CardBody>
+                      </Card>
+                    </Fade>
+                  </div>)
+
+                })
                 :
                 null
               }
-
             </Row>
           </Col>
+
           <div style={{borderRight: "1px solid #c6c9cb", height: "1490px"}}></div>
           <Col md="4">
             <h5 className="text-left" style={{color:"#405ba0"}}>Awaiting compliance approval <small>(3 requests)</small></h5><br/>

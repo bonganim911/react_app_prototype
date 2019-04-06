@@ -4,6 +4,7 @@ import './Upload.css';
 import Progress from '../Progress/Progress';
 import {Redirect} from 'react-router';
 import axios, {post} from 'axios';
+import CompanyInformation from '../../Base/Forms/Forms';
 
 class Upload extends Component {
   constructor(props) {
@@ -44,7 +45,7 @@ class Upload extends Component {
     if (this.state.preview) {
       window.sessionStorage.setItem('previewData', JSON.stringify(this.state.ocrData.data));
       // window.sessionStorage.setItem('file_name', this.state.ocrData.file);
-      return <Redirect push to="/base/form"/>;
+      return <Redirect to="/base/form"/>;
     }
     if (this.state.successfullUploaded) {
       return (

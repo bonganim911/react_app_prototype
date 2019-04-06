@@ -15,7 +15,8 @@ import {
   TabPane, Input
 } from 'reactstrap';
 import {AppSwitch} from '@coreui/react'
-import Dashboard from '../../Dashboard/Dashboard'
+import Dashboard from '../Cards/Cards';
+import Company from '../Company/CompanyInformation';
 
 class ListGroups extends Component {
 
@@ -30,7 +31,7 @@ class ListGroups extends Component {
     this.handleRedirect = this.handleRedirect.bind(this);
   }
 
-  handleRedirect(){
+  handleRedirect() {
     this.setState({goToDashboard: true})
   }
 
@@ -43,16 +44,17 @@ class ListGroups extends Component {
   }
 
   render() {
-    if(this.state.goToDashboard){
-      return <Dashboard company={this.props.customerData}/>;
+    if (this.state.goToDashboard) {
+      return (
+        <div className="sidebar-hidden aside-menu-hidden">
+          <Dashboard companyData={this.props.customerData}/>
+        </div>)
     }
     return (
       <div className="animated fadeIn">
         <div style={{paddingBottom: "35px"}}>
-          <Button onClick={this.handleRedirect} className="btn-lg btn-pill"
-                  style={{backgroundColor: 'rgb(64, 91, 160)', color: 'white'}}>
-            <i className="fa fa-dot-circle-o"></i>
-            Dashboard
+          <Button color="warning" onClick={this.handleRedirect} className="mr-4 btn-pill">
+            Go To Dashboard
           </Button>
         </div>
         <Row>
@@ -64,7 +66,9 @@ class ListGroups extends Component {
                   style={{marginTop: "-25px", borderRight: "1"}}>
                   <div style={{marginTop: "32px", marginBottom: "30px"}}>
                     <h5 className="text-left">{this.props.customerData.customer_information.name}</h5>
-                    <small className="text-left">Mohd Ali</small>
+                    <small className="text-left">{this.props.customerData.partners_details.map((partner) => {
+                      return partner.name + ", "
+                    })}</small>
                     <br/><br/>
                     <div className="text-left">
                       <a className="btn"
@@ -289,50 +293,15 @@ class ListGroups extends Component {
                 </Row>
               </TabPane>
               <TabPane tabId={1}>
-                <form onSubmit="" className="form-horizontal">
-                  <Row>
-                    <span><strong className="text-center">Company Information</strong></span>
-                    <hr style={{color: 'blue'}}></hr>
-                    <br/>
-                  </Row>
-                  <FormGroup>
-                    <Label htmlFor="company">Company</Label>
-                    <Input type="text" id="company" value={this.props.customerData.customer_information.name}/>
-                  </FormGroup>
-                  <FormGroup>
-                    <Label htmlFor="vat">Trading Licence Number</Label>
-                    <Input type="text" id="vat" value={this.props.customerData.customer_information.trade_licence_number}/>
-                  </FormGroup>
-                  <FormGroup row>
-                    <Col xs="4">
-                      <FormGroup>
-                        <Label htmlFor="street">Annual Turn Over</Label>
-                        <Input type="text" id="street" value={this.props.customerData.customer_information.annual_turnover}/>
-                      </FormGroup>
-                    </Col>
-                    <Col xs="4">
-                      <FormGroup>
-                        <Label htmlFor="street">No. of Employees</Label>
-                        <Input type="text" id="street"
-                               value={this.props.customerData.customer_information.number_of_employees}/>
-                      </FormGroup>
-                    </Col>
-                    <Col xs="4">
-                      <FormGroup>
-                        <Label htmlFor="street">Company website</Label>
-                        <Input type="text" id="street" value={this.props.customerData.customer_information.company_website}/>
-                      </FormGroup>
-                    </Col>
-                  </FormGroup>
-                </form>
+                <Company customer={this.props.customerData.customer_information}/>
               </TabPane>
               <TabPane tabId={2}>
-                <form>
-                  <Row>
-                    <span><strong>Business Address</strong> (for all official communication)</span><br/>
-                  </Row>
-                  <br/>
-
+                <div>
+                  <h5 className="text-left" style={{color: "#405ba0"}}>Business Address (for all official
+                    communication)</h5>
+                  <br/><br/>
+                </div>
+                <form key="business">
                   <FormGroup row className="my-0">
                     <Col xs="4">
                       <FormGroup>
@@ -365,7 +334,8 @@ class ListGroups extends Component {
                     <Col xs="4">
                       <FormGroup>
                         <Label htmlFor="postal-code">Street/No</Label>
-                        <Input type="text" id="postal-code" value={this.props.customerData.business_address.street_name}/>
+                        <Input type="text" id="postal-code"
+                               value={this.props.customerData.business_address.street_name}/>
                       </FormGroup>
                     </Col>
                   </FormGroup>
@@ -410,24 +380,24 @@ class ListGroups extends Component {
                 </form>
               </TabPane>
               <TabPane tabId={3}>
-                <form>
-                  <Row>
-                    <span><strong>VAT (Value Added Tax) Registration details:</strong></span><br/>
-                  </Row>
-                  <br/>
-
-
+                <div>
+                  <h5 className="text-left" style={{color: "#405ba0"}}>VAT (Value Added Tax) Registration details</h5>
+                  <br/><br/>
+                </div>
+                <form key="vat">
                   <FormGroup row className="my-0">
                     <Col xs="6">
                       <FormGroup>
                         <Label htmlFor="city">Tax registration number (TRN)</Label>
-                        <Input type="text" id="city" value={this.props.customerData.VAT_Registration.registration_number}/>
+                        <Input type="text" id="city"
+                               value={this.props.customerData.VAT_Registration.registration_number}/>
                       </FormGroup>
                     </Col>
                     <Col xs="6">
                       <FormGroup>
                         <Label htmlFor="postal-code">Tax registration number (TRN) effective date</Label>
-                        <Input type="text" id="postal-code" value={this.props.customerData.VAT_Registration.effective_date}/>
+                        <Input type="text" id="postal-code"
+                               value={this.props.customerData.VAT_Registration.effective_date}/>
                       </FormGroup>
                     </Col>
                   </FormGroup>
@@ -452,15 +422,14 @@ class ListGroups extends Component {
                 </form>
               </TabPane>
               <TabPane tabId={4}>
-                <form>
-                  <Row>
-                    <span><strong>Details of Proprietors/Partners/Directors/POA Holders:</strong></span><br/>
-                  </Row>
-                  <br/>
-
+                <div>
+                  <h5 className="text-left" style={{color: "#405ba0"}}>Details of Proprietors/Partners/Directors/POA Holders</h5>
+                  <br/><br/>
+                </div>
+                <form key="partners">
                   <Card style={{paddingTop: '20px', paddingLeft: '10px', paddingRight: '10px'}}>
                     {this.props.customerData.partners_details.map((partner, index) =>
-                      <Col xs="6">
+                      <Col xs="6" key={index}>
                         <Card>
                           <CardBody>
                             <Row xs="3">
@@ -511,7 +480,7 @@ class ListGroups extends Component {
                   </Card>
                 </form>
               </TabPane>
-              <TabPane tabId={5}>
+              <TabPane tabId={7}>
                 <p>Irure enim occaecat labore sit qui aliquip reprehenderit amet velit. Deserunt ullamco ex
                   elit nostrud
                   ut dolore nisi officia magna
