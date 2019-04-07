@@ -1,0 +1,5 @@
+- task: NodeTool@0
+  inputs:
+    versionSpec: '8.x'
+- script: npm test
+

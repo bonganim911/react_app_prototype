@@ -8,7 +8,6 @@ class Dashboard extends Component {
   }
 
   render(){
-    // console.log('bridge', this.props.company);
     return (
       <div className="sidebar-hidden aside-menu-hidden">
         <Cards companyData={this.props.company}/>

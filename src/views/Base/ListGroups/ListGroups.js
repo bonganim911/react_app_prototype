@@ -17,6 +17,7 @@ import {
 import {AppSwitch} from '@coreui/react'
 import Dashboard from '../Cards/Cards';
 import Company from '../Company/CompanyInformation';
+import Partner from '../Partners/Partners';
 
 class ListGroups extends Component {
 
@@ -44,6 +45,7 @@ class ListGroups extends Component {
   }
 
   render() {
+    console.log('check for partners', this.props);
     if (this.state.goToDashboard) {
       return (
         <div className="sidebar-hidden aside-menu-hidden">
@@ -422,85 +424,13 @@ class ListGroups extends Component {
                 </form>
               </TabPane>
               <TabPane tabId={4}>
-                <div>
-                  <h5 className="text-left" style={{color: "#405ba0"}}>Details of Proprietors/Partners/Directors/POA Holders</h5>
-                  <br/><br/>
-                </div>
-                <form key="partners">
-                  <Card style={{paddingTop: '20px', paddingLeft: '10px', paddingRight: '10px'}}>
-                    {this.props.customerData.partners_details.map((partner, index) =>
-                      <Col xs="6" key={index}>
-                        <Card>
-                          <CardBody>
-                            <Row xs="3">
-                              <div className="progress-group-prepend">
-                                <span className="progress-group-text">Name:</span>
-                              </div>
-                              <div className="progress-group-bars">
-                                <Input type="text" id="postal-code" value={partner.name}/>
-                              </div>
-                              <div className="progress-group-prepend">
-                                <span className="progress-group-text">Mobile Number:</span>
-                              </div>
-                              <div className="progress-group-bars">
-                                <Input type="text" id="postal-code" value={partner.mobile}/>
-                              </div>
-                              <div className="progress-group-prepend">
-                                <span className="progress-group-text">Phone</span>
-                              </div>
-                              <div className="progress-group-bars">
-                                <Input type="text" id="postal-code" value={partner.phone}/>
-                              </div>
-                            </Row>
-                            <Row xs="3">
-                              <div className="progress-group-prepend">
-                                <span className="progress-group-text">Email Address</span>
-                              </div>
-                              <div className="progress-group-bars">
-                                <Input type="text" id="postal-code" value={partner.email}/>
-                              </div>
-                              <div className="progress-group-prepend">
-                                <span className="progress-group-text">Mail Address:</span>
-                              </div>
-                              <div className="progress-group-bars">
-                                <Input type="text" id="postal-code" value={partner.mailing_address}/>
-                              </div>
-                              <div className="progress-group-prepend">
-                                <span className="progress-group-text">Place of Birth</span>
-                              </div>
-                              <div className="progress-group-bars">
-                                <Input type="text" id="postal-code" value={partner.place_of_birth}/>
-                              </div>
-                            </Row>
-
-                          </CardBody>
-                        </Card>
-                      </Col>
-                    )}
-                  </Card>
-                </form>
+                  <Partner partners={this.props.customerData.partners_details}/>
               </TabPane>
               <TabPane tabId={7}>
-                <p>Irure enim occaecat labore sit qui aliquip reprehenderit amet velit. Deserunt ullamco ex
-                  elit nostrud
-                  ut dolore nisi officia magna
-                  sit occaecat laboris sunt dolor. Nisi eu minim cillum occaecat aute est cupidatat aliqua
-                  labore
-                  aute occaecat ea aliquip sunt amet. Aute mollit dolor ut exercitation irure commodo non amet
-                  consectetur quis amet culpa. Quis ullamco
-                  nisi amet qui aute irure eu. Magna labore dolor quis ex labore id nostrud deserunt dolor
-                  eiusmod eu pariatur culpa mollit in irure.</p>
+                <p>Information coming later..</p>
               </TabPane>
               <TabPane tabId={6}>
-                <p>Irure enim occaecat labore sit qui aliquip reprehenderit amet velit. Deserunt ullamco ex
-                  elit nostrud
-                  ut dolore nisi officia magna
-                  sit occaecat laboris sunt dolor. Nisi eu minim cillum occaecat aute est cupidatat aliqua
-                  labore
-                  aute occaecat ea aliquip sunt amet. Aute mollit dolor ut exercitation irure commodo non amet
-                  consectetur quis amet culpa. Quis ullamco
-                  nisi amet qui aute irure eu. Magna labore dolor quis ex labore id nostrud deserunt dolor
-                  eiusmod eu pariatur culpa mollit in irure.</p>
+                <p>Information coming later..</p>
               </TabPane>
             </TabContent>
           </Col>
