@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Card, CardBody, Alert, Col, Row, Fade, Badge} from 'reactstrap';
+import {Card, CardBody, Alert, Col, Row, Fade, Badge, Button} from 'reactstrap';
 import Modals from '../Modals/Modals';
+import OCR from '../OCR/OCR';
 import CompanyInformation from '../ListGroups/ListGroups';
 
 
@@ -14,10 +15,12 @@ class Cards extends Component {
       fadeIn: true,
       timeout: 300,
       goToCompanyInformation: false,
+      goToOCR: false,
       selectedCompany:{},
       companies: []
     };
     this.handleRenderDetailInformation = this.handleRenderDetailInformation.bind(this);
+    this.toggleOCR = this.toggleOCR.bind(this);
   }
 
   componentWillMount() {
@@ -43,9 +46,21 @@ class Cards extends Component {
     });
   }
 
+  toggleOCR(){
+    this.setState({
+      goToOCR: true
+    })
+  }
+
+
+
   render() {
     if(this.state.goToCompanyInformation){
       return <CompanyInformation customerData={this.state.selectedCompany}/>;
+    }
+
+    if(this.state.goToOCR){
+      return <OCR />;
     }
 
     let partnerNames;
@@ -54,7 +69,10 @@ class Cards extends Component {
     }
     return (
       <div>
+        <Row>
+        <Button color="warning" onClick={this.toggleOCR} className="mr-1 text-lg-right">OCR Protoype</Button>
         <Modals />
+        </Row>
         <Row style={{marginRight:"0px", marginLeft:"0px"}}>
           <Col md="4">
             { this.state.companies ?

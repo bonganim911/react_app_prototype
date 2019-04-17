@@ -1,0 +1,89 @@
+import React from 'react';
+import FileBase64 from 'react-file-base64';
+import {Card, CardBody, Alert, Col, Row} from 'reactstrap';
+import Axios from "axios";
+
+class OCR extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      results: [],
+      files: []
+    };
+  }
+
+  ocrEIDFront = async (file) => {
+    const config = {
+      headers: {
+        'Authorization': "Bearer OTQzNDYyOTA5MjgwNDgwMGIzOWQyMGExMWUwNjgzYTE6NDhlNzA2MGUtZWYxNS00ZDI4LTg2ZGQtNDQyZmM2Y2UwNjg4"
+      }
+    };
+
+    let res = await Axios.post(
+      'https://api.microblink.com/recognize/execute',
+      {
+        "recognizers": [
+          "MRTD",
+          "UAE_ID_FRONT",
+          "UAE_ID_BACK",
+          "UAE_DL_FRONT"
+        ],
+        "imageBase64": file
+      },
+      config);
+    let {data} = await res.data;
+    this.setState({results: data});
+  };
+
+
+  getFiles(files) {
+    console.log("whats in there", files[0]);
+    this.ocrEIDFront(files[0].base64);
+    this.setState({files: files})
+  }
+
+  render() {
+    console.log('results', this.state.results);
+    return (
+      <div>
+        <h1 className="text-left">Macroblik API OCR Demo</h1>
+        <Row>
+          <div className="text-center mt-25">
+            <FileBase64
+              multiple={true}
+              onDone={this.getFiles.bind(this)}/>
+          </div>
+        </Row>
+        <Row>
+          <Col xs={6}>
+            <div className="text-center">
+              {this.state.files.map((file, i) => {
+                return <img style={{width: "500px", height: "700px"}} key={i} src={file.base64}/>
+              })}
+              <img src=""/>
+            </div>
+          </Col>
+          <Col xs={6}>
+            {this.state.files.length != 0 && this.state.results.length !=0 ?
+              this.state.results.map((data, index) => {
+                return <div key={index}>
+                  <h3 className="text-center mt-25">Results</h3>
+                  <div className="pre-container">
+                    <pre>{JSON.stringify(data, null, 2)}</pre>
+                  </div>
+                </div>
+
+              })
+              :
+              <div>Results Loading...</div>
+            }
+          </Col>
+        </Row>
+
+      </div>
+    )
+  }
+
+}
+
+export default OCR;

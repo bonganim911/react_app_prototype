@@ -59,11 +59,19 @@ class Upload extends Component {
       );
     } else {
       return (
-        <button
-          disabled={this.state.files.length < 0 || this.state.uploading}
-          onClick={this.uploadFiles}>
-          Upload
-        </button>
+        <div>
+          <button
+            disabled={this.state.files.length < 0 || this.state.uploading}
+            onClick={this.uploadFiles}>
+            Upload OCR Document
+          </button>
+          <button
+            disabled={this.state.files.length < 0 || this.state.uploading}
+            onClick={this.uploadFiles}>
+            Upload OCR ID
+          </button>
+
+        </div>
       );
     }
   }
@@ -90,7 +98,7 @@ class Upload extends Component {
   }
 
   fileUpload(file) {
-    const url = 'http://3.17.205.44:4000/upload';
+    const url = 'http://3.18.113.163:4000/upload';
     const formData = new FormData();
     formData.append('file', file);
     const config = {
