@@ -65,12 +65,6 @@ class Upload extends Component {
             onClick={this.uploadFiles}>
             Upload OCR Document
           </button>
-          <button
-            disabled={this.state.files.length < 0 || this.state.uploading}
-            onClick={this.uploadFiles}>
-            Upload OCR ID
-          </button>
-
         </div>
       );
     }

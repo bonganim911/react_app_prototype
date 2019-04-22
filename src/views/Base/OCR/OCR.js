@@ -8,7 +8,8 @@ class OCR extends React.Component {
     super(props);
     this.state = {
       results: [],
-      files: []
+      files: [],
+      loading:false
     };
   }
 
@@ -25,25 +26,22 @@ class OCR extends React.Component {
         "recognizers": [
           "MRTD",
           "UAE_ID_FRONT",
-          "UAE_ID_BACK",
-          "UAE_DL_FRONT"
+          "UAE_ID_BACK"
         ],
         "imageBase64": file
       },
       config);
     let {data} = await res.data;
-    this.setState({results: data});
+    this.setState({results: data, loading: true});
   };
 
 
   getFiles(files) {
-    console.log("whats in there", files[0]);
     this.ocrEIDFront(files[0].base64);
     this.setState({files: files})
   }
 
   render() {
-    console.log('results', this.state.results);
     return (
       <div>
         <h1 className="text-left">Macroblik API OCR Demo</h1>
@@ -64,7 +62,7 @@ class OCR extends React.Component {
             </div>
           </Col>
           <Col xs={6}>
-            {this.state.files.length != 0 && this.state.results.length !=0 ?
+            {this.state.files.length != 0 && this.state.results.length !=0 && this.state.loading ?
               this.state.results.map((data, index) => {
                 return <div key={index}>
                   <h3 className="text-center mt-25">Results</h3>
@@ -72,10 +70,11 @@ class OCR extends React.Component {
                     <pre>{JSON.stringify(data, null, 2)}</pre>
                   </div>
                 </div>
-
               })
               :
-              <div>Results Loading...</div>
+               <div>
+                 Please waiting for the OCR, please don't complain since you didn't pay for the demo.......
+               </div>
             }
           </Col>
         </Row>
